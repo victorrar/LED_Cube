@@ -266,6 +266,7 @@ void USART1_IRQHandler(void)
 void USER_UART_IRQHandler(UART_HandleTypeDef *huart) {
     if (USART1 == huart1.Instance)                                   //Determine whether it is serial port 1
     {
+
         if (RESET != __HAL_UART_GET_FLAG(&huart1, UART_FLAG_IDLE))   //Judging whether it is idle interruption
         {
             __HAL_UART_CLEAR_IDLEFLAG(
@@ -274,10 +275,12 @@ void USER_UART_IRQHandler(UART_HandleTypeDef *huart) {
         }
     }
 }
-
+uint8_t commandId = 0x00;
 void USER_UART_IDLECallback(UART_HandleTypeDef *huart) {
     //TODO process command
-    processUsartCommand();
+//    processUsartCommand();
+
+    HAL_UART_Receive_IT(&huart1, &commandId, 1);  //TODO receive command ID
 }
 
 /* USER CODE END 1 */

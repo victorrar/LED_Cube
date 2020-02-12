@@ -9,5 +9,7 @@
 //#include <stm32f1xx_hal_dma.h>
 
 void processUsartCommand();
+void initCube();
+void swapDisplayArray();
 
 #endif //KPI_LED_CUBE_LEDCONTROLLER_H
