@@ -19,7 +19,6 @@
 /* USER CODE END Header */
 
 /* Includes ------------------------------------------------------------------*/
-
 #include "main.h"
 
 /* Private includes ----------------------------------------------------------*/
@@ -104,18 +103,19 @@ int main(void)
   MX_DMA_Init();
   MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
-
+  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_SET);
   initCube();
+  int huynya = 0;
+    HAL_UART_Receive_IT(&huart1, &huynya , 1);
   /* USER CODE END 2 */
  
  
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-    while (1) { //TODO FIX DMA
+        while (1) { //TODO FIX DMA
     /* USER CODE END WHILE */
-    swapDisplayArray();
-    HAL_Delay(1000);
+
     /* USER CODE BEGIN 3 */
     }
   /* USER CODE END 3 */
@@ -302,9 +302,14 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOC_CLK_ENABLE();
   __HAL_RCC_GPIOD_CLK_ENABLE();
   __HAL_RCC_GPIOA_CLK_ENABLE();
+  __HAL_RCC_GPIOB_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(Latch_GPIO_Port, Latch_Pin, GPIO_PIN_RESET);
+
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(GPIOB, LED_LAYER_5_Pin|LED_LAYER_4_Pin|LED_LAYER_3_Pin|LED_LAYER_2_Pin 
+                          |LED_LAYER_1_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin : Latch_Pin */
   GPIO_InitStruct.Pin = Latch_Pin;
@@ -312,6 +317,15 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(Latch_GPIO_Port, &GPIO_InitStruct);
+
+  /*Configure GPIO pins : LED_LAYER_5_Pin LED_LAYER_4_Pin LED_LAYER_3_Pin LED_LAYER_2_Pin 
+                           LED_LAYER_1_Pin */
+  GPIO_InitStruct.Pin = LED_LAYER_5_Pin|LED_LAYER_4_Pin|LED_LAYER_3_Pin|LED_LAYER_2_Pin 
+                          |LED_LAYER_1_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
 }
 

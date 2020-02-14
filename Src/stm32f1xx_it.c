@@ -280,7 +280,7 @@ void USER_UART_IDLECallback(UART_HandleTypeDef *huart) {
     //TODO process command
 //    processUsartCommand();
 
-    HAL_UART_Receive_IT(&huart1, &commandId, 1);  //TODO receive command ID
+//    HAL_UART_Receive_IT(&huart1, &commandId, 1);  //TODO receive command ID
 }
 
 /* USER CODE END 1 */
